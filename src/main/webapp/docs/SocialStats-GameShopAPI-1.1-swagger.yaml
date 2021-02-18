@@ -1,0 +1,395 @@
+swagger: "2.0"
+info:
+  description: Game Shop API
+  version: "1.1"
+  title: API SocialStats
+  # put the contact info for your development or API team
+  contact:
+    email: geronimolallena@gmail.com
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: api-rest-2020.appspot.com
+basePath: /api
+# tags are used for organizing operations
+tags:
+- name: admins
+  description: Secured Admin-only calls
+- name: developers
+  description: Operations available to regular developers
+
+paths:
+  /games/{gameId}:
+    get:
+      tags:
+      - games
+      summary: Get a game by id
+      operationId: getGame
+      produces:
+      - application/json
+      parameters:
+      - name: gameId
+        in: path
+        description: ID of the game to return
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Game'
+        400:
+          description: bad input parameter
+    delete:
+      tags:
+      - games
+      summary: delete a game
+      operationId: removeGame
+      description: Remove a game
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: gameId
+        in: path
+        description: ID of the game to be deleted
+        required: true
+        type: string
+      responses:
+        200:
+          description: item removed
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+  /games:
+    put:
+      tags:
+      - games
+      summary: update a game
+      operationId: updateGame
+      description: Update a game
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: cuerpo
+        in: body
+        schema: 
+          "$ref": "#/definitions/Game"
+        description: game properties
+        required: true
+      responses:
+        201:
+          description: item updated
+        400:
+          description: invalid input, object invalid
+    post:
+      tags:
+      - games
+      summary: add a game
+      operationId: addGame
+      description: Add a game
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        schema: 
+              "$ref": "#/definitions/Game"
+        description: ID of the game to added
+        required: true
+        
+      responses:
+        201:
+          description: item added
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+    get:
+      tags:
+      - games
+      summary: Get a game by query
+      operationId: getAllGames
+      produces:
+      - application/json
+      parameters:
+      - name: q
+        in: query
+        description: q of the game to return
+        required: false
+        type: string
+      - name: name
+        in: query
+        description: name of the game to return
+        required: false
+        type: string
+      - name: order
+        in: query
+        description: name, -name, genero o -genero
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Game'
+        400:
+          description: bad input parameter
+          
+  /gameShops/{gameShopId}:
+    get:
+      tags:
+      - gameShop
+      summary: Get a gameShop by id
+      operationId: getGameShop
+      produces:
+      - application/json
+      parameters:
+      - name: gameShopId
+        in: path
+        description: ID of the gameShop to be return
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GameShop'
+        400:
+          description: bad input parameter
+    delete:
+      tags:
+      - gameShop
+      summary: Delete a gameShop by id
+      operationId: removeGameShop
+      produces:
+      - application/json
+      parameters:
+      - name: gameShopId
+        in: path
+        description: ID of the gameShop to be delete
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GameShop'
+        400:
+          description: bad input parameter
+          
+  /gameShops:
+    put:
+      tags:
+      - gameShop
+      summary: update a gameShop
+      operationId: updateGameShop
+      description: Update a gameShop
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: cuerpo
+        in: body
+        schema: 
+          "$ref": "#/definitions/GameShop"
+        description: Game Shop data to update
+        required: true
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+    post:
+      tags:
+      - gameShop
+      summary: add a gameShop
+      operationId: addGameShop
+      description: Add a game shop
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        schema: 
+              "$ref": "#/definitions/GameShop"
+        description: Game shop data to add
+        required: true
+        
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+    get:
+      tags:
+      - gameShop
+      summary: Get a gameShop by query
+      operationId: getAllGameShop
+      produces:
+      - application/json
+      parameters:
+      - name: isEmpty
+        in: query
+        description: true or false mostrar tiendas con juegos o sin ellos
+        required: false
+        type: string
+      - name: name
+        in: query
+        description: name of the game to return
+        required: false
+        type: string
+      - name: order
+        in: query
+        description: name o -name
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Game'
+        400:
+          description: bad input parameter
+          
+  /gameShops/{gameShopId}/{gameId}:
+    post:
+      tags:
+      - gameShop
+      summary: add a game in a Game Shop
+      operationId: addGameGameShop
+      consumes:
+      - text/plain
+      produces:
+      - application/json
+      parameters:
+      - name: gameShopId
+        in: path
+        description: ID of the gameShop where the game be add
+        required: true
+        type: string
+      - name: gameId
+        in: path
+        description: ID of the game to be add
+        required: true
+        type: string
+      - name: body
+        in: body
+        description: ID of the gameShop where the game be add
+        required: false
+        schema:
+          "$ref": "#/definitions/GameShop"
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GameShop'
+        400:
+          description: bad input parameter
+          
+    delete:
+      tags:
+      - gameShop
+      summary: delete a game in a Game Shop
+      operationId: removeGameGameShop
+      produces:
+      - application/json
+      parameters:
+      - name: gameShopId
+        in: path
+        description: ID of the gameShop where the game is going to be deleted
+        required: true
+        type: string
+      - name: gameId
+        in: path
+        description: ID of the game to be deleted
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GameShop'
+        400:
+          description: bad input parameter
+  
+definitions:
+  Game:
+    type: object
+    required:
+    - id
+    - name
+    properties:
+      id:
+        type: string
+        example: 'g1'
+      name:
+        type: string
+        example: 'Valorant'
+      añoLanzamiento:
+        type: string
+        example: '2020'
+      edadRecomendada:
+        type: string
+        example: '+18'
+      genero:
+        type: string
+        example: 'Aventura'
+      desarrollador:
+        type: string
+        example: 'Epic Games'
+      modoDeJuego:
+        type: string
+        example: 'Multijugador'
+      idSteam:
+        type: string
+        example: '271590'
+      idTwitch:
+        type: string
+        example: '32982'
+  GameShop:
+    type: object
+    required:
+    - id
+    - name
+    properties:
+      id:
+        type: string
+        example: 'gs1'
+      name:
+        type: string
+        example: 'Steam'
+      description:
+        type: string
+        example: 'Online Game Shop - Steam'
+      games:
+        type: object
+        example: 'Game'

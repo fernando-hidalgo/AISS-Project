@@ -1,0 +1,79 @@
+#profilePic{
+    width: 100px;
+    height: 100px;
+}
+body{
+    background-color: #212121;
+}
+
+.textoNombre{
+    color: #CCE;
+}
+
+.stream{
+	width: 25%;
+	float: left;
+    text-align:center;
+    color: #CCE;
+    border:4px solid #6441a5;
+}
+
+.video{
+	width: 25%;
+	float: right;
+    text-align:center;
+    color: #CCE;
+    border:4px solid #6441a5;
+}
+
+.container{
+	color: #CCE;
+    text-align:center
+}
+
+.user{
+	color: #CCE;
+	font-size:large;
+	color: #815fc0;
+}
+
+.titulo{
+	color: #CCE;
+	font-size:medium;
+	font-style: italic;
+}
+
+.datos{
+	color: #CCE;
+	display:inline-block;
+	position: absolute;
+	left:40%;
+	text-align:center;
+}
+
+
+img.letrasLogo{
+	position: absolute;
+	top: 5%;
+	left: 39.5%;
+}
+
+.uVideo{
+	color: #CCE;
+	display:inline-block;
+	position: relative;
+	top: 250px;
+	left: 1%;
+	text-align:center;
+	border:4px solid #6441a5;
+}
+
+.clip{
+	color: #CCE;
+	display:inline-block;
+	position: absolute;
+	top: 422px;
+	border:4px solid #6441a5;
+	left: 50%;
+	text-align:center;
+}

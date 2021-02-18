@@ -1,0 +1,16 @@
+{	
+	"Youtube": { 
+        "tokenUrl": "https://www.googleapis.com/oauth2/v4/token",
+        "clientId": "905959019723-ocbd02spe6ga3lss6q4pto8m0jmo0f9e.apps.googleusercontent.com",
+        "clientSecret": "zxcIfshuqACHklyOFzyfd3lB",
+        "authorizationFormUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+        "scopes": ["https://www.googleapis.com/auth/youtube"]
+    },
+    "Twitch": { 
+        "tokenUrl": "https://id.twitch.tv/oauth2/token",
+        "clientId": "k91k14kjbhma8gc3srtu1mrh8ss1y2",
+        "clientSecret": "m51sayrxw3n243i8z3efvgk505gzgo",
+        "authorizationFormUrl": "https://id.twitch.tv/oauth2/authorize",
+        "scopes": ["user:edit","clips:edit","bits:read","channel:read:subscriptions","user:read:email"]
+    }
+}		

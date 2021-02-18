@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	
+	<!-- All REST resources will be prefixed by /api  -->
+	<context-param>
+		<param-name>resteasy.servlet.mapping.prefix</param-name>
+		<param-value>/api</param-value>
+	</context-param>
+
+	<!-- Servlets -->
+	<servlet>
+		<servlet-name>Resteasy</servlet-name>
+		<servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+		<init-param>
+			<param-name>javax.ws.rs.Application</param-name>
+			<param-value>aiss.api.TwitchApplication</param-value>
+		</init-param>
+	</servlet>		
+	
+	<!-- Servlet mappings -->
+	<!-- All calls to /api/xxx will be sent to the resteasy servlet -->
+	<servlet-mapping>
+		<servlet-name>Resteasy</servlet-name>
+		<url-pattern>/api/*</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>InfoTiendaController</servlet-name>
+		<servlet-class>steam.controller.InfoTiendaController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>InfoTiendaController</servlet-name>
+		<url-pattern>/InfoTiendaController</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>PlaylistController</servlet-name>
+		<servlet-class>aiss.controller.youtube.PlaylistController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PlaylistController</servlet-name>
+		<url-pattern>/Playlist</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ErrorController</servlet-name>
+		<servlet-class>aiss.controller.youtube.ErrorController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ErrorController</servlet-name>
+		<url-pattern>/Error</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>SearchController</servlet-name>
+		<servlet-class>aiss.controller.youtube.SearchController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SearchController</servlet-name>
+		<url-pattern>/Search</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GameController</servlet-name>
+		<servlet-class>aiss.controller.twitch.GameController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GameController</servlet-name>
+		<url-pattern>/GameController</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>SearchByTagController</servlet-name>
+		<servlet-class>aiss.controller.Tumblr.SearchByTagController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SearchByTagController</servlet-name>
+		<url-pattern>/SearchByTagController</url-pattern>
+	</servlet-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>socialStats.jsp</welcome-file>
+	</welcome-file-list>
+	
+	<!--  OAUTH SERVLETS 
+  
+  	For each OAuth 2.0 service, you need to create two servlets: one for the initiation 
+  	and another for the callback. After sucess the token for the provider will be available
+  	in the session scope under the name <provider>-token. E.g.: Spotify-token.
+  	
+  	Those servlets support 2 parameters:
+  	 - provider: which is mandatory and specifies the configuration from the OAuthConfig.json file which
+  	    will be applied.
+  	 - onSuccess: which is optional specifies the behaviour of the servlet after an successful 
+  	 	authorization. If you specify close as the value of the parameter, the page will close. If you
+  	 	specify redirect:XXXX, the page will be redirected to XXXX.  
+  	
+  	WARNING: The url-patterns of all the servlets mus be disjoint. 
+  			Our recommendation is that if you expecify X as the provider, the url-pattern of the 
+  			initiation servlet could be	/AuthController/X, and the url-pattern of the callback
+  			 servlet must be /oauth2callback/X.
+  -->
+  <!--    Spotify example -->
+  
+  <!--  
+  <servlet>
+    <description></description>
+    <display-name>SpotifyAuthController</display-name>
+    <servlet-name>SpotifyAuthController</servlet-name>
+    <servlet-class>aiss.controller.oauth.GenericAuthController</servlet-class>
+    <init-param>
+    	<param-name>provider</param-name>
+    	<param-value>Spotify</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SpotifyAuthController</servlet-name>
+    <url-pattern>/AuthController/Spotify</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SpotifyOAuth2Callback</display-name>
+    <servlet-name>SpotifyOAuth2Callback</servlet-name>
+    <servlet-class>aiss.controller.oauth.OAuth2Callback</servlet-class>
+    <init-param>
+    	<param-name>provider</param-name>
+    	<param-value>Spotify</param-value>
+    </init-param>
+    <init-param>
+    	<param-name>onSuccess</param-name>
+    	<param-value>close</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SpotifyOAuth2Callback</servlet-name>
+    <url-pattern>/oauth2callback/Spotify</url-pattern>
+  </servlet-mapping>
+  
+  -->
+  
+   <servlet>
+    <description></description>
+    <display-name>TwitchAuthController</display-name>
+    <servlet-name>TwitchAuthController</servlet-name>
+    <servlet-class>aiss.controller.oauth.GenericAuthController</servlet-class>
+    <init-param>
+    	<param-name>provider</param-name>
+    	<param-value>Twitch</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TwitchAuthController</servlet-name>
+    <url-pattern>/AuthController/Twitch</url-pattern>
+  </servlet-mapping>
+  <!--TwitchOAuth2Callback-->
+  <servlet>
+    <description></description>
+    <display-name>TwitchOAuth2Callback</display-name>
+    <servlet-name>TwitchOAuth2Callback</servlet-name>
+    <servlet-class>aiss.controller.oauth.OAuth2Callback</servlet-class>
+    <init-param>
+    	<param-name>provider</param-name>
+    	<param-value>Twitch</param-value>
+    </init-param>
+    <init-param>
+    	<param-name>onSuccess</param-name>
+    	<param-value>redirect:/GameController</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TwitchOAuth2Callback</servlet-name>
+    <url-pattern>/oauth2callback/Twitch</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+        <description/>
+        <servlet-name>YoutubeAuthController</servlet-name>
+        <servlet-class>aiss.controller.oauth.youtube.GenericAuthController</servlet-class>
+        <init-param>
+            <param-name>provider</param-name>
+            <param-value>Youtube</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>YoutubeAuthController</servlet-name>
+        <url-pattern>/AuthController/Youtube</url-pattern>
+    </servlet-mapping>
+    <!--YoutubeOAuth2Callback-->
+   <servlet>
+        <description/>
+        <servlet-name>YoutubeOAuth2Callback</servlet-name>
+        <servlet-class>aiss.controller.oauth.youtube.OAuth2Callback</servlet-class>
+        <init-param>
+            <param-name>provider</param-name>
+            <param-value>Youtube</param-value>
+        </init-param>
+        <init-param>
+            <param-name>onSuccess</param-name>
+            <param-value>redirect:/Search</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>YoutubeOAuth2Callback</servlet-name>
+        <url-pattern>/oauth2callback/Youtube</url-pattern> 
+    </servlet-mapping>
+    
+    
+    <!-- TumblrOauth -->  
+      <servlet>
+        <description/>
+        <servlet-name>TumblrOauthController</servlet-name>
+        <servlet-class>aiss.controller.oauth.Tumblr.GenericAuth1Controller</servlet-class>
+      <!--    <init-param>
+            <param-name>provider</param-name>
+            <param-value>Tumblr</param-value>
+        </init-param> -->
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TumblrOauthController</servlet-name>
+        <url-pattern>/oauth1controller/Tumblr</url-pattern>
+    </servlet-mapping>
+    
+    
+       <servlet>
+        <description/>
+        <servlet-name>TumblrOauth1Callback</servlet-name>
+        <servlet-class>aiss.controller.oauth.Tumblr.OAuth1Callback</servlet-class>
+        <!-- <init-param>
+            <param-name>provider</param-name>
+            <param-value>Tumblr</param-value>
+        </init-param>
+        <init-param>
+            <param-name>onSuccess</param-name>
+            <param-value>redirect:/indexTumblr.html</param-value>
+        </init-param> -->
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TumblrOauth1Callback</servlet-name>
+        <url-pattern>/oauth1callback/Tumblr</url-pattern> 
+    </servlet-mapping>
+
+</web-app>
